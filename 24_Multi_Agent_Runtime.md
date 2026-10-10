@@ -52,16 +52,16 @@ imports from `agent.core`, `agent.runtime`, `agent.memory` and `agent.llm`.
 
 ```mermaid
 flowchart LR
-    UI[CLI / dashboard / API] -->|cancel / pause / inject| RC[RunControl "team"]
+    UI[CLI / dashboard / API] -->|cancel / pause / inject| RC[RunControl team]
     RC --> T[CancellationToken team]
     RC --> G[PauseGate]
     RC --> IB[(inbox of notes)]
-    RC -->|child| RC1[RunControl "analyst"]
-    RC -->|child| RC2[RunControl "coder"]
+    RC -->|child| RC1[RunControl analyst]
+    RC -->|child| RC2[RunControl coder]
     T -->|cancel propagates| T1[token analyst]
     T -->|cancel propagates| T2[token coder]
-    RC1 -->|checkpoint()| A1[ToolAgent analyst]
-    RC2 -->|checkpoint()| A2[ToolAgent coder]
+    RC1 -->|checkpoint| A1[ToolAgent analyst]
+    RC2 -->|checkpoint| A2[ToolAgent coder]
 ```
 
 - `CancellationToken.check(where)` raises `CancelledError`, which subclasses
